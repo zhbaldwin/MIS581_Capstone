@@ -1,0 +1,54 @@
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This file reads in the Job data xlsx file and
+generates frequency plots and distributions using PANDAS.
+"""
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+
+# Read in jobs data
+df =  pd.read_excel('MEPs_Jobs_data\SASDATA\JOBCHNGINFO.xlsx')
+
+h = plt.figure();
+
+df['YEARSWORKED'].hist();
+
+plt.title("Freq of Total Years Worked All",fontweight='bold');
+plt.ylabel('Freq Of Years Worked')
+plt.xlabel('Years Worked')
+
+h1 = plt.figure();
+
+df1 = df[df['JOBCHANGE'] == 0]
+
+df1.reset_index(drop=True)
+
+df1['YEARSWORKED'].hist();
+
+plt.title("Freq of Years Worked No Job Changed",fontweight='bold');
+plt.ylabel('Freq Of Years Worked')
+plt.xlabel('Years Worked')
+
+h2 = plt.figure();
+
+df2 = df[df['JOBCHANGE'] == 1]
+
+df2.reset_index(drop=True)
+
+df2['YEARSWORKED'].hist();
+
+plt.title("Freq of Years Worked Job Changed",fontweight='bold');
+plt.ylabel('Freq Of Years Worked')
+plt.xlabel('Years Worked')
+
+summStatsFull = df.describe();
+summStatsNoChange = df1.describe();
+summStatsChange = df2.describe();
+
+summStatsFull.to_csv('summStatsFull.csv')
+summStatsNoChange.to_csv('summStatsNoChange.csv')
+summStatsChange.to_csv('summStatsChange.csv')
